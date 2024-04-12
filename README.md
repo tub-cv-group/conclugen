@@ -6,13 +6,7 @@ Self-Supervised Representation Learning Facial Expression Recognition Study - Su
 
 1. Clone the repository
 
-2. Before running the script, set the following environment variables and make sure the directories exist and you have write access:
-
-    - If you want to log to CometML, also set `COMET_API_KEY` to your CometML API key and `COMET_WORKSPACE` to your CometML workspace. In this case, you also need to uncomment the lines `- class_path: loggers.CometLogger` in `configs/conclu.yaml` and `configs/simclr.yaml`
-
-    The remaining environment variables will be created by the script.
-
-3. Assuming you have `docker` installed, you can execute from the project's directory the script:
+2. Assuming you have `docker` installed, you can execute from the project's directory the script:
 
     `. ./bash/run.sh model_name dataset_name`
 
@@ -34,6 +28,12 @@ Self-Supervised Representation Learning Facial Expression Recognition Study - Su
     - `mosei`
 
     The code will automatically download the model weights and datasets (precomputed features of the backbones) and run testing for FER on the respective dataset.
+
+Extra:
+
+3. If you want to log to CometML, also set `COMET_API_KEY` to your CometML API key and `COMET_WORKSPACE` to your CometML workspace. In this case, you also need to uncomment the lines `- class_path: loggers.CometLogger` in `configs/conclu.yaml` and `configs/simclr.yaml`
+
+    The remaining environment variables will be created by the script.
 
 ---
 # Table of Contents

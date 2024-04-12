@@ -1,0 +1,40 @@
+class_path: data.datamodules.VoxCeleb2DataModule
+init_args:
+  data_dir: data
+  labels: ['none']
+  num_classes: 1
+  resize_scale: 180
+  num_mels: 128
+  multi_label: false
+  modalities: ['frames_2d_3d', 'audio_spectrograms', 'texts']
+  transforms:
+    train:
+      frames_2d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+            - class_path: data.transforms.ResizeVideo
+              init_args:
+                size: $[self.img_size[0], self.img_size[1]]
+            - class_path: pytorchvideo.transforms.Normalize
+              init_args:
+                mean: $self.mean['frames_2d']
+                std: $self.std['frames_2d']
+      frames_3d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+            - class_path: data.transforms.ResizeVideo
+              init_args:
+                size: $[self.img_size[0], self.img_size[1]]
+            - class_path: pytorchvideo.transforms.Normalize
+              init_args:
+                mean: $self.mean['frames_3d']
+                std: $self.std['frames_3d']
+  feature_precomputation_config:
+    frames_2d:
+      target_fps: 1
+    frames_3d:
+      target_fps: 16
+      window_size: 16
+      window_stride: 16

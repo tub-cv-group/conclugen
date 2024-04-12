@@ -1,0 +1,4 @@
+eval_func: features_visualization
+eval:
+  ckpt_path:
+  reduce_methode: [tsne] #[umap,tsne]

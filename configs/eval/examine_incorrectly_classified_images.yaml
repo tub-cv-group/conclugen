@@ -1,0 +1,3 @@
+eval_func: examine_incorrectly_classified_images
+eval:
+  ckpt_path: null # need to set in to_edit.yaml

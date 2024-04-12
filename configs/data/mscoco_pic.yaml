@@ -1,0 +1,6 @@
+class_path: data.datamodules.MSCocoPutInContextDatamodule
+init_args:
+  data_dir: datasets
+  g_blur_sigma: 64
+  g_filter_size: 51
+  num_classes: 7

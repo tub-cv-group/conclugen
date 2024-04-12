@@ -1,0 +1,310 @@
+# Default available model backbones
+import os
+
+STAGE_TRAINING = 'training'
+STAGE_VALIDATION = 'validation'
+STAGE_TESTING = 'testing'
+
+# Keys for computation steps of models
+KEY_MODEL_OUTPUTS = 'model-outputs'
+KEY_TARGETS = 'targets'
+
+# Data
+EXTERNAL_DATA_DIR = 'external'
+INTERIM_DATA_DIR = 'interim'
+PROCESSED_DATA_DIR = 'processed'
+DATASET_CAER = 'caer'
+DATASET_CAER_AUDIO_ONLY = 'caer-audio-only'
+DATASET_CAER_EXTRACTED = 'caer-extracted'
+DATASET_CAER_EXTRACTED_FULL = 'caer-extracted-full'
+DATASET_CAER_EXTRACTED_FACE = 'caer-extracted-face'
+# mm stands for multi modal
+DATASET_CAER_EXTRACTED_MM = 'caer-extracted-mm'
+DATASET_CAERS = 'caers'
+DATASET_CAERS_CROPPED = 'caers-cropped'
+DATASET_CMU_MOSEI = 'cmu-mosei'
+DATASET_MELD = 'meld'
+DATASET_RAVDESS = 'ravdess'
+DATASET_VOXCELEB2 = 'voxceleb2'
+DATASET_BU4DFE = 'bu4dfe'
+DATASET_VGGFACE2 = 'vggface2'
+DATASET_CAERS_PUT_IN_CONTEXT = 'caers-pic'
+DATASET_MS_COCO = 'mscoco'
+DATASET_MS_COCO_PUT_IN_CONTEXT = 'mscoco-pic'
+AVAILABLE_DATASETS = [DATASET_CAERS, DATASET_CAERS_CROPPED,
+                      DATASET_CAERS_PUT_IN_CONTEXT, DATASET_MS_COCO_PUT_IN_CONTEXT]
+FACEDETECTION_CONFIDENCE_THRESHOLD_CROPPING = 0.95
+DIR_COPY_SRC = 'src'
+DIR_CKPTS = 'checkpoints'
+DIR_GIT = '.git'
+
+DIR_CONFIGS = 'configs'
+CONFIG_FILENAME = os.path.join(DIR_CONFIGS, 'config.yaml')
+
+KEY_RESULTS_LOGITS = 'logits'
+KEY_RESULTS_BACKBONE_FEATURES = 'backbone_features'
+KEY_RESULTS_FEATURES = 'features'
+KEY_RESULTS_CLUSTER_CLASSIFICATIONS = 'cluster_classifications'
+KEY_RESULTS_PROJECTIONS = 'projections'
+KEY_RESULTS_RECONSTRUCTIONS = 'reconstructions'
+KEY_RESULTS_REPRESENTATIONS = 'representations'
+
+# Config keys that are not deducted from the init functions of the
+# the classes but added manually to Pytorch Lightning CLI
+KEY_EXP_NAME = 'exp_name'
+KEY_RUN_NAME = 'run_name'
+KEY_RUN_ID = 'run_id'
+KEY_TUNING = 'tuning'
+KEY_RAY_HEAD_ADDRESS = 'head_address'
+KEY_COMETML_RUN_ID = 'cometml_run_id'
+KEY_WANDB_RUN_ID = 'wandb_run_id'
+# So that other users can configure their own workspace and don't have to
+# use mine
+KEY_COMETML_WORKSPACE = 'cometml_workspace'
+KEY_RUN_DIR = 'run_dir'
+KEY_COMMANDS = 'commands'
+KEY_REPLACE_TRAINER_CALLBACKS = 'replace_trainer_callbacks'
+KEY_REMOVE_TRAINER_CALLBACKS = 'remove_trainer_callbacks'
+KEY_CKPT_CALLBACK_MONITOR = 'ckpt_callback_monitor'
+KEY_EARLY_STOPPING_MONITOR = 'early_stopping_monitor'
+KEY_DIR_CKPTS = 'ckpt_dir'
+KEY_DIR_ARTIFACTS = 'artifacts_dir'
+# Dot-notation since we have nested keys here
+KEY_EVAL_FUNC = 'eval_func'
+KEY_EVAL = 'eval'
+# That's something that often changes and thus the model configs need to be
+# regularly modified which is a source of error. By defining this parameter,
+# the batch size can be set from the to_edit.yaml config.
+KEY_BATCH_SIZE = 'batch_size'
+
+# Our expression codes, if a dataset uses different ones we need to handle them
+EXPR_ANGER_IDX = 0
+# CAER-S has different names for Anger in test and train set
+EXPR_ANGRY_IDX = 0
+EXPR_DISGUST_IDX = 1
+EXPR_FEAR_IDX = 2
+EXPR_HAPPY_IDX = 3
+EXPR_NEUTRAL_IDX = 4
+EXPR_SAD_IDX = 5
+EXPR_SURPRISE_IDX = 6
+
+CAER_EXPRESSION_LABELS = [
+    'Anger', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise'
+]
+
+CMU_MOSEI_EXPRESSION_LABELS = [
+    'Happiness', 'Sadness', 'Anger', 'Fear', 'Disgust', 'Surprise'
+]
+
+MELD_SENTIMENT_LABELS = {
+    'neutral': 0, 'positive': 1, 'negative': -1
+}
+
+# To not redefine those strings everywhere (the batch keys, backbone identifiers
+# etc. share the same names)
+NAME_ANNOTATIONS = 'annotations'
+NAME_SENTIMENT = 'sentiment'
+NAME_TARGETS = 'targets'
+NAME_PERSON_ID = 'person_id'
+NAME_VIDEOS = 'videos'
+NAME_VIDEOS_CONVERTED = 'videos_converted'
+NAME_VIDEOS_ORIGINAL = 'videos_original'
+NAME_VIDEO_INTERVALS = 'video_intervals'
+NAME_FRAMES = 'frames'
+NAME_VIDEOS = 'videos'
+NAME_FRAMES_2D_3D = 'frames_2d_3d'
+NAME_FRAMES_2D = 'frames_2d'
+NAME_FRAMES_3D = 'frames_3d'
+NAME_AUDIO_SPECTROGRAMS = 'audio_spectrograms'
+NAME_AUDIO = 'audio'
+NAME_TEXTS = 'texts'
+NAME_GLOVE_EMBEDDINGS = 'glove_embeddings'
+NAME_FACIAL_LANDMARKS = 'facial_landmarks'
+NAME_FILENAMES = 'filenames'
+NAME_INPUTS = 'inputs'
+NAME_MODALITIES = 'modalities'
+NAME_EMOTIONS = 'emotions'
+NAME_CROPPED_FACE = 'crop'
+ANNOTATIONS_KEY_EMOTIONS = NAME_EMOTIONS
+
+# Data keys for DataModules
+DATA_KEY_ANNOTATIONS = NAME_ANNOTATIONS
+DATA_KEY_VIDEOS_ORIGINAL = NAME_VIDEOS_ORIGINAL
+DATA_KEY_VIDEOS = NAME_VIDEOS
+DATA_KEY_VIDEOS_CONVERTED = NAME_VIDEOS_CONVERTED
+# Needed by CMU MOSEI, since there we need to first separate the videos according to their intervals
+DATA_KEY_VIDEO_INTERVALS = NAME_VIDEO_INTERVALS
+DATA_KEY_FRAMES_2D_3D = NAME_FRAMES_2D_3D
+DATA_KEY_FRAMES_2D = NAME_FRAMES_2D
+DATA_KEY_FRAMES_3D = NAME_FRAMES_3D
+DATA_KEY_AUDIO = NAME_AUDIO
+DATA_KEY_AUDIO_SPECTROGRAMS = NAME_AUDIO_SPECTROGRAMS
+DATA_KEY_TEXTS = NAME_TEXTS
+DATA_KEY_FACIAL_LANDMARKS = NAME_FACIAL_LANDMARKS
+DATA_KEY_GLOVE_EMBEDDINGS = NAME_GLOVE_EMBEDDINGS
+
+# The keys we now use to identify things in a batch
+BATCH_KEY_ANNOTATIONS = NAME_ANNOTATIONS
+BATCH_KEY_INPUTS = NAME_INPUTS
+BATCH_KEY_FILENAMES = NAME_FILENAMES
+BATCH_KEY_TARGETS = NAME_TARGETS
+BATCH_KEY_EMOTIONS = NAME_EMOTIONS
+BATCH_KEY_SENTIMENT = NAME_SENTIMENT
+BATCH_KEY_PERSON_ID = NAME_PERSON_ID
+BATCH_KEY_FRAMES = NAME_FRAMES
+BATCH_KEY_VIDEOS = NAME_VIDEOS
+BATCH_KEY_VIDEOS_ORIGINAL = NAME_VIDEOS_ORIGINAL
+BATCH_KEY_FRAMES_2D_3D = NAME_FRAMES_2D_3D
+BATCH_KEY_FRAMES_2D = NAME_FRAMES_2D
+BATCH_KEY_FRAMES_3D = NAME_FRAMES_3D
+BATCH_KEY_AUDIO = NAME_AUDIO
+BATCH_KEY_AUDIO_SPECTROGRAMS = NAME_AUDIO_SPECTROGRAMS
+BATCH_KEY_TEXTS = NAME_TEXTS
+BATCH_KEY_FACIAL_LANDMARKS = NAME_FACIAL_LANDMARKS
+BATCH_KEY_GLOVE_EMBEDDINGS = NAME_GLOVE_EMBEDDINGS
+BATCH_KEY_CROPPED_FACE = NAME_CROPPED_FACE
+# A bit of a hack, but if we have a custom collate_fn for the dataloader and we need to pack and pad
+# unequal length sequences, we need to know the modalities in collate_fn and this is a direct way to get them there
+BATCH_KEY_MODALITIES = NAME_MODALITIES
+
+ORIGINAL_IMG_KEY = 'original'
+FACE_IMG_KEY = 'face'
+CROPPED_IMG_KEY = FACE_IMG_KEY
+CONTEXT_IMG_KEY = 'context'
+BINARY_IMG_KEY = 'binary'
+AUDIO_SPECTOGRAM_KEY = 'audio_spectogram'
+BATCH_KEY_MASKS = 'seq_masks'
+BLUR_IMG_KEY = 'blur'
+LABEL_KEY = 'label'
+ORIG_IMG_FILENAME_KEY = 'original_filename'
+FACE_IMG_FILENAME_KEY = 'face_filename'
+CONTEXT_IMG_FILESNAME_KEY = 'context_filename'
+BINARY_IMG_FILENAME_KEY = 'binary_filename'
+SUBTITLE_KEY = 'subtitle'
+
+NUM_VIDEOS_ORIGINAL_OK = 'num_videos_ok'
+NUM_VIDEOS_OK = 'num_videos_ok'
+NUM_VIDEO_FEATURES_2D_OK = 'num_video_features_2d_ok'
+NUM_VIDEO_FEATURES_3D_OK = 'num_video_features_3d_ok'
+NUM_AUDIO_OK = 'num_audio_ok'
+NUM_SPECTROGRAMS_OK = 'num_spectrograms_ok'
+NUM_SPECTROGRAM_FEATURES_OK = 'num_spectrogram_features_ok'
+NUM_LANDMARKS_OK = 'num_landmarks_ok'
+NUM_LANDMARK_FEATURES_OK = 'num_landmark_features_ok'
+NUM_EMBEDDINGS_OK = 'num_embeddings_ok'
+NUM_EMBEDDING_FEATURES_OK = 'num_embedding_features_ok'
+NUM_TEXTS_OK = 'num_texts_ok'
+NUM_TEXT_FEATURES_OK = 'num_text_features_ok'
+ANNOTATIONS_FILESIZE_OK = 'annotations_filesize_ok'
+NUM_CROPPED_FACES_OK ='num_cropped_faces_ok'
+
+# Data preparation/extraction keys
+MODALITY_FOR_MODALITY_OK = {
+    NUM_VIDEOS_OK: NAME_VIDEOS,
+    NUM_VIDEO_FEATURES_2D_OK: NAME_FRAMES_2D,
+    NUM_VIDEO_FEATURES_3D_OK: NAME_FRAMES_3D,
+    NUM_SPECTROGRAMS_OK: NAME_AUDIO_SPECTROGRAMS,
+    NUM_SPECTROGRAM_FEATURES_OK: NAME_AUDIO_SPECTROGRAMS,
+    NUM_LANDMARKS_OK: NAME_FACIAL_LANDMARKS,
+    NUM_LANDMARK_FEATURES_OK: NAME_FACIAL_LANDMARKS,
+    NUM_EMBEDDINGS_OK: NAME_GLOVE_EMBEDDINGS,
+    NUM_EMBEDDING_FEATURES_OK: NAME_GLOVE_EMBEDDINGS,
+    NUM_TEXTS_OK: NAME_TEXTS,
+    NUM_TEXT_FEATURES_OK: NAME_TEXTS
+}
+
+# Just all keys combined that the VideoDatamodule needs
+VIDEO_PREPARATION_KEYS = [
+    NUM_VIDEOS_OK,
+    NUM_VIDEO_FEATURES_2D_OK,
+    NUM_VIDEO_FEATURES_3D_OK,
+    NUM_SPECTROGRAMS_OK,
+    NUM_SPECTROGRAM_FEATURES_OK,
+    NUM_LANDMARKS_OK,
+    NUM_LANDMARK_FEATURES_OK,
+    NUM_EMBEDDINGS_OK,
+    NUM_EMBEDDING_FEATURES_OK,
+    NUM_TEXTS_OK,
+    NUM_TEXT_FEATURES_OK,
+    ANNOTATIONS_FILESIZE_OK,
+    NUM_CROPPED_FACES_OK
+]
+
+# Keys for backbone config
+# identifier will be used by backbone_loader to identify the correct backbone
+BACKBONE_KEY_IDENTIFIER = 'name'
+BACKBONE_KEY_HUGGINFACE_MODEL = 'model'
+BACKBONE_KEY_FRAMES_2D_3D = NAME_FRAMES_2D_3D
+BACKBONE_KEY_FRAMES_2D = NAME_FRAMES_2D
+BACKBONE_KEY_FRAMES_3D = NAME_FRAMES_3D
+BACKBONE_KEY_AUDIO_SPECTROGRAMS = NAME_AUDIO_SPECTROGRAMS
+BACKBONE_KEY_FACIAL_LANDMARKS = NAME_FACIAL_LANDMARKS
+BACKBONE_KEY_GLOVE_EMBEDDINGS = NAME_GLOVE_EMBEDDINGS
+BACKBONE_KEY_TEXTS = NAME_TEXTS
+
+# Keys for the feature precomputation config
+PRECOMP_KEY_FRAMES_2D_3D = NAME_FRAMES_2D_3D
+PRECOMP_KEY_FRAMES_2D = NAME_FRAMES_2D
+PRECOMP_KEY_FRAMES_3D = NAME_FRAMES_3D
+PRECOMP_KEY_SPECTROGRAMS = NAME_AUDIO_SPECTROGRAMS
+PRECOMP_KEY_FACIAL_LANDMARKS = NAME_FACIAL_LANDMARKS
+PRECOMP_KEY_EMBEDDINGS = NAME_GLOVE_EMBEDDINGS
+PRECOMP_KEY_TEXTS = NAME_TEXTS
+PRECOMP_KEY_TARGET_FPS = 'target_fps'
+PRECOMP_KEY_WINDOW_STRIDE = 'window_stride'
+PRECOMP_KEY_WINDOW_SIZE = 'window_size'
+
+PRECOMP_KEY_FOR_BATCH_KEY = {
+    BATCH_KEY_FRAMES_2D_3D: PRECOMP_KEY_FRAMES_2D_3D,
+    BATCH_KEY_FRAMES_2D: PRECOMP_KEY_FRAMES_2D,
+    BATCH_KEY_FRAMES_3D: PRECOMP_KEY_FRAMES_3D,
+    BATCH_KEY_AUDIO_SPECTROGRAMS: PRECOMP_KEY_SPECTROGRAMS,
+    BATCH_KEY_FACIAL_LANDMARKS: PRECOMP_KEY_FACIAL_LANDMARKS,
+    BATCH_KEY_GLOVE_EMBEDDINGS: PRECOMP_KEY_EMBEDDINGS,
+    BATCH_KEY_TEXTS: PRECOMP_KEY_TEXTS
+}
+
+# The names for the directories
+FILENAME_ANNOTATIONS = 'annotations.yaml'
+FILENAME_ANNOTATIONS_CROPPED = 'annotations_cropped.yaml'
+FILENAME_PRECOMP_CONFIG = 'precomp.yaml'
+DIRNAME_VIDEOS = 'videos'
+DIRNAME_VIDEOS_CONVERTED = 'videos_converted'
+DIRNAME_VIDEOS_ORIGINAL = 'videos_original'
+DIRNAME_VIDEO_INTERVALS = 'videos_intervals'
+# For individual frames
+DIRNAME_FRAMES = 'frames'
+# For precomputed features of frames, e.g. features/frames_2d
+DIRNAME_FRAMES_2D = 'frames_2d'
+DIRNAME_FRAMES_3D = 'frames_3d'
+DIRNAME_AUDIO_SPECTROGRAMS = 'audio_spectrograms'
+DIRNAME_FACIAL_LANDMARKS = 'facial_landmarks'
+DIRNAME_GLOVE_EMBEDDINGS = 'glove_embeddings'
+DIRNAME_TEXTS = 'texts'
+DIRNAME_FEATURES = 'features'
+DIRNAME_AUDIO = 'audio'
+DIRNAME_CROPPED_FACE = 'videos_cropped_merged'
+
+# Legacy indices in the batch
+ORIG_IMG_IDX = ORIGINAL_IMG_KEY
+CROPPED_IMG_IDX = FACE_IMG_KEY
+FACE_IMG_IDX = CROPPED_IMG_IDX
+CONTEXT_IMG_IDX = CONTEXT_IMG_KEY
+BINARY_IMG_IDX = BINARY_IMG_KEY
+AUDIO_SPECTOGRAM_IDX = AUDIO_SPECTOGRAM_KEY
+BLUR_IMG_IDX = BLUR_IMG_KEY
+LABEL_IDX = LABEL_KEY
+ORIG_IMG_FILENAMES_IDX = ORIG_IMG_FILENAME_KEY
+CROPPED_IMG_FILENAMES_IDX = FACE_IMG_FILENAME_KEY
+CONTEXT_IMG_FILESNAMES_IDX = CONTEXT_IMG_FILESNAME_KEY
+BINARY_IMG_FILENAMES_IDX = BINARY_IMG_FILENAME_KEY
+SUBTITLE_IDX = SUBTITLE_KEY
+
+# Audio generation parameters
+AUDIO_SAMPLE_RATE = 22050
+AUDIO_N_FFT = 2048
+AUDIO_HOP_LENGTH = 160
+
+ENV_WORD2VEC_MODEL_DIR = 'WORD2VEC_MODEL_DIR'
+
+OPTIMIZER_INIT_KEY_MODULE = 'module'

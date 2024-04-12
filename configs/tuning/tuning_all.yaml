@@ -1,0 +1,39 @@
+# TuneConfig will set metric and mode on the search alg and the scheduler
+tune_config:
+  metric: loss_unweighted_epoch
+  mode: min
+  num_samples: 200
+  search_alg:
+    class_path: ray.tune.search.hyperopt.HyperOptSearch
+    init_args:
+      # Same as in pytorch, for reproducibility, the reset (like metric) will be set from TuneConfig
+      random_state_seed: 127
+#head_address: 10.10.10.53:6379
+resources_per_trial:
+  cpu: 8
+  gpu: 1
+  memory: 8.5e+10
+hparams:
+  model.init_args.representation_dim: ray.tune.choice([1024, 2048, 4096])
+  model.init_args.projection_dim: ray.tune.choice([512, 768, 1024, 1536])
+  model.init_args.reconstruction_dim: ray.tune.choice([512, 768, 1024, 1536])
+  model.init_args.num_clusters: ray.tune.choice([2, 4, 8, 32, 64, 128])
+  model.init_args.kmeans_start_epoch: ray.tune.qrandint(0, 15, 3)
+  model.init_args.kmeans_queue_size: ray.tune.choice([2, 4, 8, 16, 32, 64, 128])
+  model.init_args.kmeans_loss_mode: ray.tune.choice(['individual', 'joint'])
+  model.init_args.loss_weight_contrastive: ray.tune.qloguniform(0.0001, 1.1, 0.0001)
+  model.init_args.loss_weight_clustering: ray.tune.qloguniform(0.0001, 1.1, 0.0001)
+  model.init_args.loss_weight_reconstruction: ray.tune.qloguniform(0.0001, 1.1, 0.0001)
+  model.init_args.optimizer_init.init_args.lr: ray.tune.qloguniform(0.00001, 0.001, 0.00001)
+  model.init_args.optimizer_init.init_args.weight_decay: ray.tune.qloguniform(0.00001, 0.001, 0.00001)
+callback:
+  class_path: callbacks.RunIDTuneRportCallback
+  init_args:
+    'metrics': loss_unweighted_epoch
+    'on': train_epoch_end
+scheduler:
+  class_path: ray.tune.schedulers.ASHAScheduler
+  init_args:
+    'max_t': 3
+    'grace_period': 1
+    'reduction_factor': 2

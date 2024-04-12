@@ -1,0 +1,4 @@
+model:
+  init_args:
+    backbone:
+      name: tcn

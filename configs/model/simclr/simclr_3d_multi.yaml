@@ -1,0 +1,7 @@
+class_path: models.SimCLRModel
+init_args:
+  metric_averaging: weighted
+  recreate_last_layer: true
+  multi_label: true
+  logits_binarization_threshold: 0.5
+

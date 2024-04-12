@@ -1,0 +1,7 @@
+model:
+  init_args:
+    backbone: vgg16_face
+    backbone_weights_path: models/vgg_face/vgg_face.pth
+    # Imagenet mean and std
+    std: [0.229, 0.224, 0.225]
+    mean: [0.485, 0.456, 0.406]

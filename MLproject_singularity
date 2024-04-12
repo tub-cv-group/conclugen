@@ -1,0 +1,13 @@
+name: ssrl-fer-study
+
+singularity_env:
+  image:  docker://ymousano/ssrl-fer-study:latest
+  build_dir: singularity
+  volumes: ['$PWD/experiments:/mlflow/projects/code/experiments',
+            '$PWD/data:/mlflow/projects/code/data',
+            '$PWD/src:/mlflow/projects/code/src',
+            '$PWD/configs:/mlflow/projects/code/configs',
+            '$TORCH_HOME:$TORCH_HOME']
+  environment: ['MLFLOW_TRACKING_URI', 'COMETML_API_KEY', 'TORCH_HOME']
+
+entry_points: !include MLproject_entrypoints.yaml

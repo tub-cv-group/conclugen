@@ -1,0 +1,347 @@
+class_path: data.datamodules.CAERVideoDataModule
+init_args:
+  labels: ['Neutral', 'Surprise', 'Fear', 'Sadness', 'Joy', 'Disgust', 'Anger']
+  num_classes: 7
+  multi_label: false
+  resize_scale: 180
+  crop_face: True
+  num_mels: null
+  modalities: ['frames_2d_3d']
+  num_augmented_samples_to_load: 1
+  transforms:
+    train:
+      frames_2d:
+      - name: aug1
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug2
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug3
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug4
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug5
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug6
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug7
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug8
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug9
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      - name: aug10
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      frames_3d:
+      - name: aug1
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug2
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug3
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug4
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug5
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug6
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug7
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug8
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug9
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+      - name: aug10
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.8, 1.0]
+              ratio: [0.8, 1.2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+    val:
+      frames_2d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.ResizeVideo
+            init_args:
+              size: $[self.img_size[0], self.img_size[1]]
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      frames_3d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.ResizeVideo
+            init_args:
+              size: $[self.img_size[0], self.img_size[1]]
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+    test:
+      frames_2d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.ResizeVideo
+            init_args:
+              size: $[self.img_size[0], self.img_size[1]]
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_2d']
+              std: $self.std['frames_2d']
+      frames_3d:
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.ResizeVideo
+            init_args:
+              size: $[self.img_size[0], self.img_size[1]]
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean['frames_3d']
+              std: $self.std['frames_3d']
+  feature_precomputation_config:
+    frames_2d:
+      target_fps: 1
+    frames_3d:
+      target_fps: 16
+      window_size: 16
+      window_stride: 16

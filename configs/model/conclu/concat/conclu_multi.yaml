@@ -1,0 +1,35 @@
+class_path: models.ConCluModel
+init_args:
+  # Mean and std from Kinetics400
+  std:
+    frames_2d: [0.485, 0.456, 0.406]
+    frames_3d: [0.22803, 0.22145, 0.216989]
+  mean:
+    frames_2d: [0.229, 0.224, 0.225]
+    frames_3d: [0.43216, 0.394666, 0.37645]
+  metric_averaging: weighted
+  logits_binarization_threshold: 0.5
+  multi_label: true
+  # To be set in editable config
+  num_classification_head_layers: null
+  recreate_last_layer: true
+  # No need for a multilabel version since the ConCluModel gets the appropriate
+  # downstream task loss based on the multi_label attribute which comes from
+  # the data config
+  backbone:
+    # The name will be used by MLflow to apppend to the run name
+    name: default
+    # Defining pretrained is not really necessary, as that is the default for
+    # those models anyways, but to make it more explicit we left it here
+    frames_2d:
+      name: resnet152
+      weights: ResNet152_Weights.DEFAULT
+    frames_3d:
+      name: resnet3d101
+      pretrained: kinetics-400
+    audio_spectrograms:
+      name: davenet
+      pretrained: true
+    texts:
+      name: huggingface
+      model: j-hartmann/emotion-english-distilroberta-base

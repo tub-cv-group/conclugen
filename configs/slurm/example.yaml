@@ -1,0 +1,31 @@
+partition:
+  value: [your partition]
+  comment: Partition
+gpu_type:
+  value: a100
+memory_mb_per_node:
+  value: 300G
+  comment: Memory
+time:
+  value: 7-00:00:00
+  comment: Time
+per_experiment_nb_gpus:
+  value: 1
+per_experiment_nb_nodes:
+  value: 1
+per_experiment_nb_cpus:
+  value: 16
+  comment: Num CPUs
+notify_on_end:
+  value: true
+notify_on_fail:
+  value: true
+email:
+  value: [your email]
+modules: [
+  "nvidia/cuda/11.2",
+  "singularity/3.7.0",
+  "git/2.9.5"
+]
+commands: [
+]

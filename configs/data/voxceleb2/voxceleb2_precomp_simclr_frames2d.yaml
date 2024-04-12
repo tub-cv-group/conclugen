@@ -1,0 +1,325 @@
+class_path: data.datamodules.VoxCeleb2DataModule
+init_args:
+  data_dir: data
+  labels: ['none']
+  num_classes: 1
+  resize_scale: 180
+  multi_label: false
+  modalities: ['frames_2d']
+  num_augmented_samples_to_load: 2
+  transforms:
+    train:
+      - name: aug1
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug2
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug3
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug4
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug5
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug6
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug7
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug8
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug9
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+      - name: aug10
+        class_path: torchvision.transforms.Compose
+        init_args:
+          transforms:
+          - class_path: data.transforms.RandomResizedCropVideo
+            init_args:
+              size: $self.img_size
+              scale: [0.3, 1.0]
+              ratio: [0.5, 2]
+          - class_path: torchvision.transforms.RandomHorizontalFlip
+          - class_path: data.transforms.VideoColorJitter
+            init_args:
+              p: 0.8
+              brightness: 0.8
+              contrast: 0.8
+              saturation: 0.8
+              hue: 0.2
+          - class_path: data.transforms.RandomGrayscaleVideo
+            init_args:
+              p: 0.2
+          - class_path: torchvision.transforms.RandomApply
+            init_args:
+              transforms:
+              - class_path: data.transforms.GaussianBlurVideo
+                init_args:
+                  kernel_size: $int(0.1 * self.img_size[0])
+              p: 0.5
+          - class_path: pytorchvideo.transforms.Normalize
+            init_args:
+              mean: $self.mean
+              std: $self.std
+  feature_precomputation_config:
+    frames_2d:
+      target_fps: 1
+      transforms:

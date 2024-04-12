@@ -1,0 +1,15 @@
+name: ssrl-fer-study
+
+#### DOCKER ####
+docker_env:
+  image:  ymousano/ssrl-fer-study:latest
+  volumes: ['$PWD/experiments:/mlflow/projects/code/experiments',
+            '$PWD/data:/mlflow/projects/code/data',
+            '$PWD/src:/mlflow/projects/code/src',
+            '$PWD/models:/mlflow/projects/code/models',
+            '$PWD/configs:/mlflow/projects/code/configs',
+            '$TORCH_HOME:$TORCH_HOME',
+            '$MLFLOW_TRACKING_URI:$MLFLOW_TRACKING_URI']
+  environment: ['MLFLOW_TRACKING_URI', 'COMET_API_KEY', 'COMET_WORKSPACE', 'TORCH_HOME']
+
+entry_points: !include MLproject_entrypoints.yaml

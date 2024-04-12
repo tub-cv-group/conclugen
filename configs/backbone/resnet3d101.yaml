@@ -1,0 +1,10 @@
+model:
+  init_args:
+    backbone:
+      name: resnet3d101
+      pretrained: kinetics-400
+    # Mean and std from Kinetics
+    std:
+      frames_3d: [0.22803, 0.22145, 0.216989]
+    mean:
+      frames_3d: [0.43216, 0.394666, 0.37645]

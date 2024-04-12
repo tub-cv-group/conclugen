@@ -1,0 +1,28 @@
+# TuneConfig will set metric and mode on the search alg and the scheduler
+tune_config:
+  metric: loss_unweighted_epoch
+  mode: min
+  num_samples: 100
+  search_alg:
+    class_path: ray.tune.search.hyperopt.HyperOptSearch
+    init_args:
+      # Same as in pytorch, for reproducibility, the reset (like metric) will be set from TuneConfig
+      random_state_seed: 127
+resources_per_trial:
+  cpu: 8
+  gpu: 1
+  memory: 8.5e+10
+hparams:
+  model.init_args.optimizer_init.init_args.lr: ray.tune.qloguniform(0.00001, 0.0001, 0.00001)
+  model.init_args.optimizer_init.init_args.weight_decay: ray.tune.qloguniform(0.00001, 0.0001, 0.00001)
+callback:
+  class_path: callbacks.RunIDTuneRportCallback
+  init_args:
+    'metrics': loss_unweighted_epoch
+    'on': train_epoch_end
+scheduler:
+  class_path: ray.tune.schedulers.ASHAScheduler
+  init_args:
+    'max_t': 3
+    'grace_period': 1
+    'reduction_factor': 2

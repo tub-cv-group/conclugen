@@ -1,0 +1,197 @@
+############ ENTRYPOINTS ############
+
+main:
+  parameters:
+    # Name of the experiment, leave empty to auto-generate
+    run_name: {type: string, default: ""}
+    # The UUID of the experiment, if existing. Leave empty if creating a new run.
+    run_id: {type: string, default: ""}
+    # The following three are the config file paths
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    trainer: {type: string, default: ""}
+    # Additional optional config as a yaml file
+    config: {type: string, default: ""}
+    # Second additional optional config as a yaml file
+    config2: {type: string, default: ""}
+    # Additional optional eval config as a yaml file
+    eval: {type: string, default: ""}
+    # Additional optional tuning config as a yaml file
+    tuning: {type: string, default: ""}
+    # Additional config arguments provided like
+    # -P strconfig="model.init_args.batch_size=16;trainer.init_args.gpu=True;data.init_args.path=..."
+    strconfig: {type: string, default: ""}
+    # Bool arguments will be resolved by the mlflow_entrypoint Python script
+    commands: {type: string, default: "fit-test"}
+
+    backbone: {type: string, default: ""}
+  # Call the entry point for CONDA to run only training like
+  # mlflow run src -e main -P expdir={experiment directory} -P ...
+
+  # For docker add -A gpus=all -A ipc=host to the end
+
+  # For singularity add -A nv to the end
+  command: "python src/mlflow_entrypoints.py mlflow_main \
+            --run_name={run_name} \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} \
+            --trainer={trainer} \
+            --config={config} \
+            --config2={config2} \
+            --eval={eval} \
+            --tuning={tuning} \
+            --strconfig={strconfig} \
+            --commands={commands} \
+            --backbone={backbone}"
+
+test:
+  parameters:
+    run_name: {type: string, default: ""}
+    run_id: {type: string, default: ""}
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    trainer: {type: string, default: ""}
+    config: {type: string, default: ""}
+    eval: {type: string, default: ""}
+    strconfig: {type: string, default: ""}
+  command: "python src/mlflow_entrypoints.py mlflow_main \
+            --run_name={run_name} \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} 
+            --trainer={trainer} \
+            --config={config} \
+            --eval={eval} \
+            --strconfig={strconfig} \
+            --commands=test"
+
+eval:
+  parameters:
+    run_name: {type: string, default: ""}
+    run_id: {type: string, default: ""}
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    trainer: {type: string, default: ""}
+    config: {type: string, default: ""}
+    eval: {type: string, default: ""}
+    strconfig: {type: string, default: ""}
+    backbone: {type: string, default: ""}
+  command: "python src/mlflow_entrypoints.py mlflow_main \
+            --run_name={run_name} \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} 
+            --trainer={trainer} \
+            --config={config} \
+            --eval={eval} \
+            --strconfig={strconfig} \
+            --commands=eval \
+            --backbone={backbone}"
+
+slurm:
+  parameters:
+    run_name: {type: string, default: ""}
+    run_id: {type: string, default: ""}
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    trainer: {type: string, default: ""}
+    config: {type: string, default: ""}
+    eval: {type: string, default: ""}
+    tuning: {type: string, default: ""}
+    strconfig: {type: string, default: ""}
+    # Path to slurm config
+    slurm: {type: string, default: "none"}
+    # Bool arguments will be resolved by the mlflow_entrypoint Python script
+    commands: {type: string, default: "fit-test"}
+    backbone: {type: string, default: ""}
+
+  command: "python src/mlflow_entrypoints.py mlflow_slurm \
+            --run_name={run_name} \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} \
+            --trainer={trainer} \
+            --config={config} \
+            --eval={eval} \
+            --tuning={tuning} \
+            --strconfig={strconfig} \
+            --commands={commands} \
+            --slurm={slurm} \
+            --backbone={backbone}"
+
+# To manually run prepare data of the DataModules, i.e. create the respective dataset
+run_prepare_data:
+  parameters:
+    # Path to the data yaml config file, will be used by the cli to
+    # determine which DataModule to use
+    data: string
+    force: {type: string, default: "False"}
+  command: "python src/mlflow_entrypoints.py mlflow_run_prepare_data \
+            --data={data} \
+            --force={force}"
+
+# Sanitizes a checkpoint by replacing and deleteing the given keys.
+# Syntax is as follows:
+# mlflow run MLproject_conda -e sanitize_ckpt -P path=...
+# -P replace="['key1', 'key1_replacement', 'key2', 'key2_replacement...']"
+# -P delete="['key1_to_delete', 'key2_to_delete', ...]"
+# Make sure to use quotes around the lists since MLflow cannot handle lists directly.
+sanitize_ckpt:
+  parameters:
+    path: string
+    replace: {type: string, default: "[]"}
+    delete: {type: string, default: "[]"}
+  command: "python src/mlflow_entrypoints.py sanitize_ckpt \
+            --path={path} \
+            --replace={replace} \
+            --delete={delete}"
+
+# To download a CometML experiment to the local disk
+download_cometml_experiment:
+  parameters:
+    workspace: string
+    project: string
+    experiment_id: string
+  command: "python src/cli.py download_cometml_experiment -w={workspace} -p={project} -i={experiment_id}"
+
+# CometML is the primary place where we delete runs, i.e. the script goes the
+# direction to delete local runs that are not on CometML
+# This script gets all experiments that are online on CometML and downloads them
+# if they don't exist and logs them to MLflow but also deteles MLflow experiments
+# if they don't exist online (but asks if that's ok)
+sync_mlflow_to_cometml:
+  parameters:
+    workspace: string
+    project: string
+  command: "python src/cli.py sync_mlflow_to_cometml -w={workspace} -p={project}"
+
+inspect_batch_inputs:
+  parameters:
+    run_id: {type: string, default: ""}
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    config: {type: string, default: ""}
+  command: "python src/mlflow_entrypoints.py mlflow_main \
+            --run_name='' \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} \
+            --config={config} \
+            --eval=configs/eval/inspect_batch_inputs.yaml \
+            --commands=eval"
+
+examine_incorrectly_classified_images:
+  parameters:
+    run_id: {type: string, default: ""}
+    model: {type: string, default: ""}
+    data: {type: string, default: ""}
+    config: {type: string, default: ""}
+  command: "python src/mlflow_entrypoints.py mlflow_main \
+            --run_name='' \
+            --run_id={run_id} \
+            --model={model} \
+            --data={data} \
+            --config={config} \
+            --eval=configs/eval/examine_incorrectly_classified_images.yaml \
+            --commands=eval"

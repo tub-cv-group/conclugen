@@ -1,0 +1,3 @@
+from models.heads.pretraining_heads import PretrainingHeads
+from models.heads.representation_heads import RepresentationHeads
+from models.heads.classification_head import ClassificationHead

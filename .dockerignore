@@ -1,0 +1,8 @@
+data
+bash
+docs
+docker
+# Experiments could be mounted
+experiments
+singularity
+*.sif

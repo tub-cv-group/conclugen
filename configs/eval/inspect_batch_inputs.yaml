@@ -1,0 +1,3 @@
+eval_func: inspect_batch_inputs
+# No params needed
+inspect_batch_inputs: {}

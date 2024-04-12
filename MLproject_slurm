@@ -1,0 +1,6 @@
+name: ssrl-fer-study
+
+#### ANACONDA ####
+conda_env: environment.yaml
+
+entry_points: !include MLproject_entrypoints.yaml

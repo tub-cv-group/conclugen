@@ -1,6 +1,7 @@
-Self-Supervised Representation Learning Facial Expression Recognition Study - Submission to CVPR 2024 workshop ABAW
+Multi-Task Multi-Modal Self-Supervised Learning for Facial Expression
+Recognition - Published CVPR 2024 workshop ABAW
 ==============================
-
+You can access the preprint [here](https://arxiv.org/abs/2404.10904)
 ---
 # Quickstart
 
@@ -967,3 +968,14 @@ Stuff that could become annoying because I forget I did it and then get mad it m
 
 * comet ml save dir is set to none manually in before_instantiate_classes
 * How do outputs look like in epoch_ends [num_train_steps, batch_size * model_output_size]
+----
+#Cite
+If you use this work in your research or find it helpful, please cite:
+
+    @misc{halawa2024multitask,
+      title={Multi-Task Multi-Modal Self-Supervised Learning for Facial Expression Recognition}, 
+      author={Marah Halawa and Florian Blume and Pia Bideau and Martin Maier and Rasha Abdel Rahman and Olaf Hellwich},
+      year={2024},
+      eprint={2404.10904},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}}

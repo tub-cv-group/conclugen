@@ -452,9 +452,11 @@ class ConCluModel(ImageClassificationModel):
                 features[C.BATCH_KEY_FRAMES_2D_3D] = torch.cat(features[C.BATCH_KEY_FRAMES_2D_3D], dim=1)
         else:
             features = self._backbone(x)
+
         result  = {
             C.KEY_RESULTS_BACKBONE_FEATURES: features
         }
+
         # NOTE: The representation heads will perform the merging of the frames 2d and 3d features and will replace
         # the batch keys with only "frames"
         representations = self._representation_heads(features)
@@ -480,18 +482,18 @@ class ConCluModel(ImageClassificationModel):
                 raise Exception(
                     f'Unkown fusion mode {self.downstream_fusion_mode}')
             logits = self._classifier(features)
-            result = {
+            result.update({
                 C.KEY_RESULTS_FEATURES: features,
                 C.KEY_RESULTS_LOGITS: logits
-            }
+            })
         else:
             # In this case, we are performing pretraining and need to apply the
             # pretraining heads to the representations
             # result contains the following keys: projections, cluster_classifications, reconstructions
-            result = self._pretraining_heads(representations)
-            # Inject representations
+            pretraining_features = self._pretraining_heads(representations)
+            # Inject pretraining stuff
+            result.update(pretraining_features)
             result[C.KEY_RESULTS_FEATURES] = features
-            # It's ok to return the features list here, same as if we returned a tuple
         return result
 
     def on_fit_start(self) -> None:

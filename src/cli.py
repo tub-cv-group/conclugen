@@ -747,21 +747,25 @@ class DefaultLightningCLI(LightningCLI):
         """Convert a list of configs to a dict where the class name is the key
         and the config is the value.
         """
+        result = {}
+
         if isinstance(configs, dict):
             for key, value in configs.items():
-                configs[key] = self._list_of_configs_as_dict(value)
+                result[key] = self._list_of_configs_as_dict(value)
             return configs
-        if not isinstance(configs, list) or not isinstance(configs[0], dict) or not 'class_path' in configs[0]:
+
+        if not isinstance(configs, list) or not hasattr(configs[0], '__getitem__') or not 'class_path' in configs[0]:
             # Easy shortcut so that we can recurse through the configs. This is important e.g. for
             # the lr_scheduler_init which might contain a list of additional lr schedulers.
             return configs
-        result = {}
+
         for idx, config in enumerate(configs):
+            sub_config = {}
             class_name = config['class_path'].split('.')[-1]
             class_name = f'{idx}_{class_name}'
             for key, value in config.items():
-                config[key] = self._list_of_configs_as_dict(value)
-            result[class_name] = config
+                sub_config[key] = self._list_of_configs_as_dict(value)
+            result[class_name] = sub_config
         return result
 
     def run(self):

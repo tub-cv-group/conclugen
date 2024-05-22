@@ -1,0 +1,77 @@
+seed_everything: 127
+
+trainer:
+  accelerator: 'gpu'
+  devices: 1
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  limit_test_batches: 1.0
+  logger:
+  - class_path: loggers.MLFlowLogger
+  - class_path: loggers.CometLogger
+    init_args:
+      upload_model_weights_enabeld: false
+  callbacks:
+  - class_path: callbacks.ModelCheckpointWithArtifactLogging
+    init_args:
+      # dir_path will be set by the cli, you don't have to set it
+      save_top_k: 10
+      monitor: val_accuracy_epoch
+      filename: '{epoch:04d}-{val_accuracy_epoch:.4f}'
+      save_last: true
+      mode: max
+      # Log the model additionally every n epochs
+      log_model_every_n_epochs: 5
+  - class_path: callbacks.PrintCallback
+  - class_path: callbacks.MeterlessProgressBar
+  # Stops training early based on avg_val_loss deltas
+  - class_path: pytorch_lightning.callbacks.EarlyStopping
+    init_args:
+      monitor: val_loss_epoch
+      mode: min
+      min_delta: 0.0
+      # Get some overhead in epochs to be sure that training has really stopped working
+      # Default patience in ReduceLROnPlateau is also 10 so we set this to double the patience here
+      patience: 15
+      # don't crash training if 'monitor' is not found, resuming from a checkpoint
+      # doesn't work properly otherwise
+      strict: false
+  # Custom LearningRateMonitor class which fixes an issue when logging param groups
+  - class_path: callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
+  # ckpt_dir will be automatically populated by the CLI
+  - class_path: callbacks.UploadCheckpointsToCometOnFitEnd
+  detect_anomaly: true
+
+model:
+  # to be set in subclasses
+  class_path: models.AbstractModel
+  init_args:
+    # Some default optimizer that kind of always works
+    optimizer_init:
+      class_path: torch.optim.AdamW
+      init_args:
+        lr: 2.0e-5
+        weight_decay: 0.001
+    lr_scheduler_init:
+      class_path: torch.optim.lr_scheduler.SequentialLR
+      init_args:
+        milestones: [5]
+        last_epoch: 10
+      # Schedulers are not defined on the init_args
+      schedulers:
+      - class_path: torch.optim.lr_scheduler.LinearLR
+        init_args:
+          start_factor: 0.1
+          total_iters: 5
+      - class_path: lr_schedulers.CosineAnnealingWarmRestartsExpDecay
+        init_args:
+          T_0: 20
+          T_mult: 2
+          eta_min: 0.000001
+          gamma: 0.75
+
+cometml_workspace: florianblume
+
+slurm: {}

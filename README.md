@@ -1,7 +1,18 @@
 Multi-Task Multi-Modal Self-Supervised Learning for Facial Expression
 Recognition - Published CVPR 2024 workshop ABAW
 ==============================
+
+_Marah Halawa*, Florian Blume*, Pia Bideau, Martin Maier, Rasha Abdel Rahman, Olaf Hellwich_
+*equal contribution
+
+---
+
 You can access the preprint [here](https://arxiv.org/abs/2404.10904)
+
+![overview_v3(1)_page-0001](https://github.com/tub-cv-group/conclugen/assets/2170192/2d82befe-f01e-4684-8f91-78c65c8e96eb)
+
+Human communication is multi-modal; e.g., face-to-face interaction involves auditory signals (speech) and visual signals (face movements and hand gestures). Hence, it is essential to exploit multiple modalities when designing machine learning-based facial expression recognition systems. In addition, given the ever-growing quantities of video data that capture human facial expressions, such systems should utilize raw unlabeled videos without requiring expensive annotations. Therefore, in this work, we employ a multitask multi-modal self-supervised learning method for facial expression recognition from in-the-wild video data. Our model combines three self-supervised objective functions: First, a multi-modal contrastive loss, that pulls diverse data modalities of the same video together in the representation space. Second, a multi-modal clustering loss that preserves the semantic structure of input data in the representation space. Finally, a multi-modal data reconstruction loss. We conduct a comprehensive study on this multimodal multi-task self-supervised learning method on three facial expression recognition benchmarks. To that end, we examine the performance of learning through different combinations of self-supervised tasks on the facial expression recognition downstream task. Our model ConCluGen outperforms several multi-modal self-supervised and fully supervised baselines on the CMU-MOSEI dataset. Our results generally show that multi-modal self-supervision tasks offer large performance gains for challenging tasks such as facial expression recognition, while also reducing the amount of manual annotations required. We release our pre-trained models as well as source code publicly.
+
 ---
 # Quickstart
 

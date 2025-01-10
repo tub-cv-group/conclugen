@@ -1,0 +1,54 @@
+trainer:
+  #min_epochs: 625
+  #max_epochs: 626
+  callbacks+:
+  - class_path: callbacks.SetClassWeightsOnModel
+
+model:
+  init_args:
+    batch_size: 4096
+    representation_dim: 4096
+    projection_dim: 512
+    img_size: [180, 180]
+    num_classification_head_layers: 1
+    num_attention_heads: null
+    model_weights_path: null
+    finetune_layers:
+      representation_heads: null
+      classifier: all
+    losses: ['class']
+    optimizer_init:
+      class_path: torch.optim.AdamW
+      init_args:
+        lr: 0.00967
+        weight_decay: 0.004
+    lr_scheduler_init:
+      class_path: torch.optim.lr_scheduler.SequentialLR
+      init_args:
+        milestones: [5]
+      schedulers: 
+      - class_path: torch.optim.lr_scheduler.LinearLR
+        init_args:
+          start_factor: 0.1
+          total_iters: 5
+      - class_path: torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
+        init_args:
+          T_0: 20
+          T_mult: 2
+          eta_min: 0.000001
+
+data:
+  init_args:
+    num_cpus: 4
+    cache_features: cpu
+
+fit:
+  ckpt_path: null
+validate:
+  ckpt_path: null
+test:
+  ckpt_path: best
+
+#cometml_workspace: set here or in environment variables
+exp_name: downstream
+machine: your-machine

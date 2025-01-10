@@ -118,9 +118,11 @@ class AbstractDataModule(LightningDataModule):
         self.data_dir = download_dir
         local_external_dir = os.path.join(download_dir, 'external')
         local_processed_dir = os.path.join(download_dir, 'processed')
+        
         local_path = os.path.join(local_processed_dir, self.DATASET_NAME)
         if not os.path.exists(local_path):
-            os.makedirs(download_dir, exist_ok=True)
+            os.makedirs(local_external_dir, exist_ok=True)
+            os.makedirs(local_processed_dir, exist_ok=True)
             packed_dataset_file = f'{self.DATASET_NAME}.tar.bz2'
             packed_dataset_path = os.path.join(local_external_dir, packed_dataset_file)
             zip_file = os.path.join(local_external_dir, f'{self.DATASET_NAME}.zip')

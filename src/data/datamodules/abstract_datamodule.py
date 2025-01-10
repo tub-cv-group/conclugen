@@ -116,26 +116,27 @@ class AbstractDataModule(LightningDataModule):
     def _download_dataset(self, url):
         download_dir = os.environ.get('DATASET_DOWNLOAD_DIR', 'data')
         self.data_dir = download_dir
+        local_external_dir = os.path.join(download_dir, 'external')
         local_processed_dir = os.path.join(download_dir, 'processed')
         local_path = os.path.join(local_processed_dir, self.DATASET_NAME)
         if not os.path.exists(local_path):
             os.makedirs(download_dir, exist_ok=True)
             packed_dataset_file = f'{self.DATASET_NAME}.tar.bz2'
-            packed_dataset_path = os.path.join(download_dir, packed_dataset_file)
-            zip_file = os.path.join(download_dir, f'{self.DATASET_NAME}.zip')
+            packed_dataset_path = os.path.join(local_external_dir, packed_dataset_file)
+            zip_file = os.path.join(local_external_dir, f'{self.DATASET_NAME}.zip')
             if not os.path.exists(packed_dataset_path):
                 print(f'Downloading dataset from {url} to {zip_file} and extracting.')
                 wget.download(url, zip_file)
             else:
                 print(f'Found packed dataset at {packed_dataset_path}. Extracting.')
             # CometML wraps the downloaded tar archive again in a zip file
-            shutil.unpack_archive(zip_file, download_dir)
+            shutil.unpack_archive(zip_file, local_external_dir)
             # This really unpacks the dataset into e.g. caer/features and caer/annotations_cropped.yaml etc
             dataset_name = self.DATASET_NAME
             if dataset_name == 'cmu-mosei':
-                tar_file = os.path.join(download_dir, 'mosei.tar.bz2')
+                tar_file = os.path.join(local_external_dir, 'mosei.tar.bz2')
             else:
-                tar_file = os.path.join(download_dir, f'{self.DATASET_NAME}.tar.bz2')
+                tar_file = os.path.join(local_external_dir, f'{self.DATASET_NAME}.tar.bz2')
             subprocess.run(['tar', '-xvf', tar_file, '-C', local_processed_dir])
 
     def _instantiate_transforms(self, transforms: Dict):

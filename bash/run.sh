@@ -137,7 +137,7 @@ else
     exit 1
 fi
 
-conclu_type="single"
+type="single"
 
 caer="https://www.comet.com/api/artifacts/version/download?versionId=9902c08a-9486-45bf-94c3-92b77390367f"
 meld="https://www.comet.com/api/artifacts/version/download?versionId=bedc3832-d411-44ad-bd1b-70c659d71e02"
@@ -151,7 +151,7 @@ elif [ $dataset_name == "meld" ]; then
     dataset=$meld
 elif [ $dataset_name == "mosei" ]; then
     dataset=$mosei
-    conclu_type="multi"
+    type="multi"
 elif [ $dataset_name == "ravdess" ]; then
     dataset=$ravdess
 else
@@ -174,9 +174,9 @@ echo "Running docker command"
 if [ $model_name == "simclr" ]; then
     docker run --rm --workdir /mlflow/projects/code/ --gpus all --ipc host -v $PWD:/mlflow/projects/code -e MLFLOW_TRACKING_URI=$mlruns_dir -e \
     COMET_API_KEY=$COMET_API_KEY -e TORCH_HOME=$torch_home_dir -e TRANSFORMERS_CACHE=$hugginface_cache_dir \
-    ymousano/ssrl-fer-study:latest "python src/mlflow_entrypoints.py mlflow_main --model=configs/model/simclr/simclr_3d_$conclu_type.yaml --data=configs/data/$dataset_name/${dataset_name}_cropped_precomp_augmented_frames_3d.yaml --config=configs/backbone/resnet3d101.yaml --config=configs/conclu.yaml --model.init_args.model_weights_path '$model' --data.init_args.data_dir '$dataset' --commands=test"
+    ymousano/ssrl-fer-study:latest "python src/mlflow_entrypoints.py mlflow_main --model=configs/model/simclr/simclr_3d_$type.yaml --data=configs/data/$dataset_name/${dataset_name}_cropped_precomp_augmented_frames_3d.yaml --config=configs/backbone/resnet3d101.yaml --config=configs/testing.yaml --model.init_args.model_weights_path '$model' --data.init_args.data_dir '$dataset' --commands=test"
 else
     docker run --rm --workdir /mlflow/projects/code/ --gpus all --ipc host -v $PWD:/mlflow/projects/code -e MLFLOW_TRACKING_URI=$mlruns_dir -e \
     COMET_API_KEY=$COMET_API_KEY -e TORCH_HOME=$torch_home_dir -e TRANSFORMERS_CACHE=$hugginface_cache_dir \
-    ymousano/ssrl-fer-study:latest "python src/mlflow_entrypoints.py mlflow_main --model=configs/model/conclu/concat/conclu_$conclu_type.yaml --data=configs/data/$dataset_name/${dataset_name}_cropped_precomp_augmented.yaml --config=configs/conclu.yaml --strconfig=\"model.init_args.model_weights_path=$model;data.init_args.data_dir=$dataset\" --commands=test"
+    ymousano/ssrl-fer-study:latest "python src/mlflow_entrypoints.py mlflow_main --model=configs/model/conclu/concat/conclu_$type.yaml --data=configs/data/$dataset_name/${dataset_name}_cropped_precomp_augmented.yaml --config=configs/testing.yaml --strconfig=\"model.init_args.model_weights_path=$model;data.init_args.data_dir=$dataset\" --commands=test"
 fi

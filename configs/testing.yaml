@@ -47,7 +47,7 @@ fit:
 validate:
   ckpt_path: null
 test:
-  ckpt_path: best
+  ckpt_path: null #will be set in run.sh via model_weights_path
 
 #cometml_workspace: set here or in environment variables
 exp_name: downstream
